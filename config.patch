@@ -1,0 +1,13 @@
+--- cacti/scripts/ss_get_mysql_stats.php~	2010-04-21 01:38:51.000000000 +0300
++++ cacti/scripts/ss_get_mysql_stats.php	2010-05-06 17:44:31.168860657 +0300
+@@ -67,6 +67,10 @@
+ # ============================================================================
+ # Include settings from an external config file (issue 39).
+ # ============================================================================
++# prefer system location first
++if ( file_exists('/etc/webapps/cacti/ss_get_mysql_stats.php') ) {
++   require('/etc/webapps/cacti/ss_get_mysql_stats.php');
++}
+ if ( file_exists(__FILE__ . '.cnf' ) ) {
+    require(__FILE__ . '.cnf');
+ }
