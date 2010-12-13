@@ -1,0 +1,25 @@
+--- better-cacti-templates-1.1.7/scripts/ss_get_mysql_stats.php~	2010-12-14 01:25:19.000000000 +0200
++++ better-cacti-templates-1.1.7/scripts/ss_get_mysql_stats.php	2010-12-14 01:25:48.490894371 +0200
+@@ -46,7 +46,7 @@
+ $mysql_ssl  = FALSE;   # Whether to use SSL to connect to MySQL.
+ 
+ $heartbeat  = '';      # db.tbl in case you use mk-heartbeat from Maatkit.
+-$cache_dir  = '/tmp';  # If set, this uses caching to avoid multiple calls.
++$cache_dir  = '/var/cache/cacti';  # If set, this uses caching to avoid multiple calls.
+ $poll_time  = 300;     # Adjust to match your polling interval.
+ $chk_options = array (
+    'innodb' => true,    # Do you want to check InnoDB statistics?
+--- better-cacti-templates-1.1.7/scripts/ss_get_by_ssh.php~	2010-04-21 01:38:48.000000000 +0300
++++ better-cacti-templates-1.1.7/scripts/ss_get_by_ssh.php	2010-12-14 01:26:36.687535074 +0200
+@@ -38,9 +38,9 @@
+ # ============================================================================
+ $ssh_user   = 'cacti';                          # SSH username
+ $ssh_port   = 22;                               # SSH port
+-$ssh_iden   = '-i /var/www/cacti/.ssh/id_rsa';  # SSH identity
++$ssh_iden   = '-i /var/lib/cacti/.ssh/id_rsa';  # SSH identity
+ $ssh_tout   = 10;                               # SSH connect timeout
+-$cache_dir  = '/tmp';  # If set, this uses caching to avoid multiple calls.
++$cache_dir  = '/var/cache/cacti';  # If set, this uses caching to avoid multiple calls.
+ $poll_time  = 300; # Adjust to match your polling interval.
+ $use_ss     = FALSE; # Whether to use the script server or not
+ $use_ssh    = TRUE;  # Whether to connect via SSH or not (default yes).
