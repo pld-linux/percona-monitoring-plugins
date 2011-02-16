@@ -19,7 +19,7 @@
 +$ssh_iden   = '-i /var/lib/cacti/.ssh/id_rsa';  # SSH identity
  $ssh_tout   = 10;                               # SSH connect timeout
 -$cache_dir  = '/tmp';  # If set, this uses caching to avoid multiple calls.
-+$cache_dir  = '/var/cache/cacti';  # If set, this uses caching to avoid multiple calls.
++$cache_dir  = '/var/cache/cacti/mysql_stats';  # If set, this uses caching to avoid multiple calls.
  $poll_time  = 300; # Adjust to match your polling interval.
  $use_ss     = FALSE; # Whether to use the script server or not
  $use_ssh    = TRUE;  # Whether to connect via SSH or not (default yes).

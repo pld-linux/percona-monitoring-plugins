@@ -2,7 +2,7 @@
 Summary:	MySQL cacti templates
 Name:		cacti-template-%{template}
 Version:	1.1.7
-Release:	2
+Release:	3
 License:	GPL v2
 Group:		Applications/WWW
 Source0:	http://mysql-cacti-templates.googlecode.com/files/better-cacti-templates-%{version}.tar.gz
@@ -21,6 +21,7 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 %define		cactidir		/usr/share/cacti
 %define		resourcedir		%{cactidir}/resource
 %define		scriptsdir		%{cactidir}/scripts
+%define		cachedir		/var/cache/cacti/mysql_stats
 
 %description
 This is a set of templates for monitoring MySQL servers with Cacti.
@@ -32,7 +33,7 @@ This is a set of templates for monitoring MySQL servers with Cacti.
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT{%{_sysconfdir},%{resourcedir},%{scriptsdir}}
+install -d $RPM_BUILD_ROOT{%{_sysconfdir},%{resourcedir},%{scriptsdir},%{cachedir}}
 
 # we deliberately are not packaging other templates this project offers:
 # - it's idiotic to graph network services over ssh
@@ -46,6 +47,11 @@ cp -a %{SOURCE1} $RPM_BUILD_ROOT%{_sysconfdir}/ss_get_mysql_stats.php
 %post
 %cacti_import_template %{resourcedir}/cacti_host_template_x_mysql_server.xml
 
+%preun
+if [ "$1" = 0 ]; then
+	echo %{cachedir}/* | xargs rm -f
+fi
+
 %clean
 rm -rf $RPM_BUILD_ROOT
 
@@ -55,3 +61,4 @@ rm -rf $RPM_BUILD_ROOT
 %attr(640,root,http) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/ss_get_mysql_stats.php
 %attr(755,root,root) %{scriptsdir}/ss_get_mysql_stats.php
 %{resourcedir}/*.xml
+%attr(770,root,http) %dir %{cachedir}
