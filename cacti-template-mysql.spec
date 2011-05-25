@@ -1,12 +1,12 @@
 %define		template	mysql
 Summary:	MySQL cacti templates
 Name:		cacti-template-%{template}
-Version:	1.1.7
-Release:	3
+Version:	1.1.8
+Release:	1
 License:	GPL v2
 Group:		Applications/WWW
 Source0:	http://mysql-cacti-templates.googlecode.com/files/better-cacti-templates-%{version}.tar.gz
-# Source0-md5:	cec81aa5cba180d079122127bde9bae0
+# Source0-md5:	c34e66af5091bc02b081a446dbe87f53
 Source1:	config.php
 Patch0:		config.patch
 Patch1:		paths.patch
