@@ -1,6 +1,7 @@
---- cacti/scripts/ss_get_mysql_stats.php~	2010-04-21 01:38:51.000000000 +0300
-+++ cacti/scripts/ss_get_mysql_stats.php	2010-05-06 17:44:31.168860657 +0300
-@@ -67,6 +67,10 @@
+diff -ur better-cacti-templates-1.1.8-orig/scripts/ss_get_mysql_stats.php better-cacti-templates-1.1.8/scripts/ss_get_mysql_stats.php
+--- better-cacti-templates-1.1.8-orig/scripts/ss_get_mysql_stats.php	2011-05-25 12:17:25.659963610 +0200
++++ better-cacti-templates-1.1.8/scripts/ss_get_mysql_stats.php	2011-05-25 12:19:29.509003208 +0200
+@@ -68,6 +68,10 @@
  # ============================================================================
  # Include settings from an external config file (issue 39).
  # ============================================================================
@@ -11,3 +12,4 @@
  if ( file_exists(__FILE__ . '.cnf' ) ) {
     require(__FILE__ . '.cnf');
  }
+Tylko w better-cacti-templates-1.1.8/scripts: ss_get_mysql_stats.php~
