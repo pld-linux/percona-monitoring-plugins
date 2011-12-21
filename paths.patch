@@ -1,4 +1,3 @@
-diff -ur better-cacti-templates-1.1.8-orig/scripts/ss_get_by_ssh.php better-cacti-templates-1.1.8/scripts/ss_get_by_ssh.php
 --- better-cacti-templates-1.1.8-orig/scripts/ss_get_by_ssh.php	2011-05-25 12:17:25.693298481 +0200
 +++ better-cacti-templates-1.1.8/scripts/ss_get_by_ssh.php	2011-05-25 12:23:51.021048978 +0200
 @@ -38,10 +38,10 @@
@@ -14,8 +13,6 @@ diff -ur better-cacti-templates-1.1.8-orig/scripts/ss_get_by_ssh.php better-cact
  $poll_time  = 300; # Adjust to match your polling interval.
  $use_ss     = FALSE; # Whether to use the script server or not
  $use_ssh    = TRUE;  # Whether to connect via SSH or not (default yes).
-Tylko w better-cacti-templates-1.1.8/scripts: ss_get_by_ssh.php~
-diff -ur better-cacti-templates-1.1.8-orig/scripts/ss_get_mysql_stats.php better-cacti-templates-1.1.8/scripts/ss_get_mysql_stats.php
 --- better-cacti-templates-1.1.8-orig/scripts/ss_get_mysql_stats.php	2011-05-25 12:17:25.659963610 +0200
 +++ better-cacti-templates-1.1.8/scripts/ss_get_mysql_stats.php	2011-05-25 12:22:36.747629448 +0200
 @@ -46,7 +46,7 @@
@@ -23,8 +20,7 @@ diff -ur better-cacti-templates-1.1.8-orig/scripts/ss_get_mysql_stats.php better
  
  $heartbeat  = '';      # db.tbl in case you use mk-heartbeat from Maatkit.
 -$cache_dir  = '/tmp';  # If set, this uses caching to avoid multiple calls.
-+$cache_dir  = '/var/cache/cacti';  # If set, this uses caching to avoid multiple calls.
++$cache_dir  = '/var/cache/cacti/mysql_stats';  # If set, this uses caching to avoid multiple calls.
  $poll_time  = 300;     # Adjust to match your polling interval.
  $chk_options = array (
     'innodb'  => true,    # Do you want to check InnoDB statistics?
-Tylko w better-cacti-templates-1.1.8/scripts: ss_get_mysql_stats.php~
