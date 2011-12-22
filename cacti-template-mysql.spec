@@ -13,7 +13,7 @@
 Summary:	MySQL cacti templates
 Name:		cacti-template-%{template}
 Version:	1.1.8
-Release:	1.1
+Release:	2
 License:	GPL v2
 Group:		Applications/WWW
 Source0:	http://mysql-cacti-templates.googlecode.com/files/better-cacti-templates-%{version}.tar.gz
@@ -23,7 +23,7 @@ Source2:	ssh_config.php
 Patch0:		config.patch
 Patch1:		paths.patch
 URL:		http://code.google.com/p/mysql-cacti-templates/
-BuildRequires:	rpmbuild(macros) >= 1.554
+BuildRequires:	rpmbuild(macros) >= 1.630
 Requires:	cacti >= 0.8.7g-6
 Conflicts:	cacti-spine < 0.8.7e-3
 BuildArch:	noarch
