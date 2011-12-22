@@ -13,7 +13,7 @@
 Summary:	MySQL cacti templates
 Name:		cacti-template-%{template}
 Version:	1.1.8
-Release:	2
+Release:	3
 License:	GPL v2
 Group:		Applications/WWW
 Source0:	http://mysql-cacti-templates.googlecode.com/files/better-cacti-templates-%{version}.tar.gz
