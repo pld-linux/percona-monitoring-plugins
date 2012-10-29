@@ -8,16 +8,15 @@
 # - OpenVZ
 # - Unix
 # https://code.google.com/p/mysql-cacti-templates/wiki/TableOfContents>
-# - currently ss_get_by_ssh.php packaged in -redis package, as it's the only user of it_
 %define		template	mysql
 Summary:	MySQL cacti templates
-Name:		cacti-template-%{template}
+Name:		percona-monitoring-plugins
 Version:	1.0.1
 Release:	1
 Epoch:		1
 License:	GPL v2
 Group:		Applications/WWW
-Source0:	http://www.percona.com/downloads/percona-monitoring-plugins/percona-monitoring-plugins-%{version}.tar.gz
+Source0:	http://www.percona.com/downloads/percona-monitoring-plugins/%{name}-%{version}.tar.gz
 # Source0-md5:	03513138a2e0490d24cd348d85e92333
 Source1:	config.php
 Source2:	ssh_config.php
@@ -39,6 +38,14 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 %description
 This is a set of templates for monitoring MySQL servers with Cacti.
 
+%package -n cacti-template-mysql
+Summary:	Cacti templates for graphing MySQL
+Group:		Applications/WWW
+Requires:	%{name} = %{epoch}:%{version}-%{release}
+
+%description -n cacti-template-mysql
+This is a set of templates for monitoring MySQL servers with Cacti.
+
 %package -n cacti-template-redis
 Summary:	Cacti templates for graphing Redis
 Group:		Applications/WWW
@@ -50,7 +57,7 @@ Requires:	nc
 This is a set of templates for monitoring Redis servers with Cacti.
 
 %prep
-%setup -qn percona-monitoring-plugins-%{version}
+%setup -q
 %patch0 -p1
 %patch1 -p1
 
@@ -82,10 +89,10 @@ cp -p %{SOURCE2} $RPM_BUILD_ROOT%{_sysconfdir}/ss_get_by_ssh.php
 cp -p templates/cacti_host_template_percona_redis_server_ht.xml \
 	$RPM_BUILD_ROOT%{resourcedir}
 
-%post
+%post -n cacti-template-mysql
 %cacti_import_template %{resourcedir}/cacti_host_template_percona_mysql_server_ht.xml
 
-%preun
+%preun -n cacti-template-mysql
 if [ "$1" = 0 ]; then
 	echo %{cachedir}/* | xargs rm -f
 fi
@@ -99,6 +106,11 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(644,root,root,755)
 %doc Changelog
+%attr(640,root,http) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/ss_get_by_ssh.php
+%attr(755,root,root) %{scriptsdir}/ss_get_by_ssh.php
+
+%files -n cacti-template-mysql
+%defattr(644,root,root,755)
 %attr(640,root,http) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/ss_get_mysql_stats.php
 %attr(755,root,root) %{scriptsdir}/ss_get_mysql_stats.php
 %{resourcedir}/cacti_host_template_percona_mysql_server_ht.xml
@@ -106,6 +118,4 @@ rm -rf $RPM_BUILD_ROOT
 
 %files -n cacti-template-redis
 %defattr(644,root,root,755)
-%attr(640,root,http) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/ss_get_by_ssh.php
-%attr(755,root,root) %{scriptsdir}/ss_get_by_ssh.php
 %{resourcedir}/cacti_host_template_percona_redis_server_ht.xml
