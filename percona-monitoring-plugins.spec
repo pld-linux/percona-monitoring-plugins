@@ -8,16 +8,17 @@
 # - OpenVZ
 # - Unix
 # https://code.google.com/p/mysql-cacti-templates/wiki/TableOfContents>
+# - graceful migrate from cacti-template-mysql (use different paths so old pkg could be kept aside?)
 %define		template	mysql
 Summary:	MySQL cacti templates
 Name:		percona-monitoring-plugins
-Version:	1.0.1
+Version:	1.0.2
 Release:	1
 Epoch:		1
 License:	GPL v2
 Group:		Applications/WWW
 Source0:	http://www.percona.com/downloads/percona-monitoring-plugins/%{name}-%{version}.tar.gz
-# Source0-md5:	03513138a2e0490d24cd348d85e92333
+# Source0-md5:	93002ccba0d81692b326566ab71ea18d
 Source1:	config.php
 Source2:	ssh_config.php
 Patch0:		config.patch
