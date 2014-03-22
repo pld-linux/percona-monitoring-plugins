@@ -43,6 +43,7 @@ Summary:	Cacti templates for graphing MySQL
 Epoch:		1
 Group:		Applications/WWW
 Requires:	%{name} = %{version}-%{release}
+Requires:	php(mysqli)
 
 %description -n cacti-template-mysql
 This is a set of templates for monitoring MySQL servers with Cacti.
