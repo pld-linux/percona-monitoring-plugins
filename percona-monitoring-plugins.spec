@@ -1,5 +1,6 @@
 # TODO
-# - how to package other templates:
+# - cacti: package other templates:
+#   http://www.percona.com/doc/percona-monitoring-plugins/1.1/#templates-for-cacti
 # - Apache
 # - JMX
 # - Memcached
@@ -7,18 +8,16 @@
 # - Nginx
 # - OpenVZ
 # - Unix
-# https://code.google.com/p/mysql-cacti-templates/wiki/TableOfContents>
 # - graceful migrate from cacti-template-mysql (use different paths so old pkg could be kept aside?)
 %define		template	mysql
 Summary:	MySQL cacti templates
 Name:		percona-monitoring-plugins
-Version:	1.0.2
-Release:	1
-Epoch:		1
+Version:	1.1.3
+Release:	0.1
 License:	GPL v2
 Group:		Applications/WWW
-Source0:	http://www.percona.com/downloads/percona-monitoring-plugins/%{name}-%{version}.tar.gz
-# Source0-md5:	93002ccba0d81692b326566ab71ea18d
+Source0:	http://www.percona.com/redir/downloads/percona-monitoring-plugins/LATEST/%{name}-%{version}.tar.gz
+# Source0-md5:	ef344e93adaeb1dd23be722daced9261
 Source1:	config.php
 Source2:	ssh_config.php
 Patch0:		config.patch
@@ -41,16 +40,18 @@ This is a set of templates for monitoring MySQL servers with Cacti.
 
 %package -n cacti-template-mysql
 Summary:	Cacti templates for graphing MySQL
+Epoch:		1
 Group:		Applications/WWW
-Requires:	%{name} = %{epoch}:%{version}-%{release}
+Requires:	%{name} = %{version}-%{release}
 
 %description -n cacti-template-mysql
 This is a set of templates for monitoring MySQL servers with Cacti.
 
 %package -n cacti-template-redis
 Summary:	Cacti templates for graphing Redis
+Epoch:		1
 Group:		Applications/WWW
-Requires:	%{name} = %{epoch}:%{version}-%{release}
+Requires:	%{name} = %{version}-%{release}
 # redis template uses nc
 Requires:	nc
 
