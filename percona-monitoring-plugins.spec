@@ -3,7 +3,6 @@
 #   http://www.percona.com/doc/percona-monitoring-plugins/1.1/#templates-for-cacti
 # - Apache
 # - JMX
-# - Memcached
 # - MongoDB
 # - Nginx
 # - OpenVZ
@@ -13,7 +12,7 @@
 Summary:	MySQL cacti templates
 Name:		percona-monitoring-plugins
 Version:	1.1.3
-Release:	0.1
+Release:	0.2
 License:	GPL v2
 Group:		Applications/WWW
 Source0:	http://www.percona.com/redir/downloads/percona-monitoring-plugins/LATEST/%{name}-%{version}.tar.gz
@@ -37,6 +36,24 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
 This is a set of templates for monitoring MySQL servers with Cacti.
+
+%package -n cacti-template-memcached
+Summary:	Memcached Cacti Template
+Group:		Applications/WWW
+Requires:	%{name} = %{version}-%{release}
+Requires:	nc
+# mark obsoletes so ftp admin knows to remove old src.rpm once this package lands
+Obsoletes:	cacti-template-memcached < 1.1
+
+%description -n cacti-template-memcached
+This template provides a host template and associated graphs for
+graphing the output of the memcached stats command on individual
+memcached installations.
+
+Graphs are provided for Bytes Used with total capacity, Cache Hits and
+Misses per second, Current Connections, Items Cached, Inbound and
+Outbound Network Traffic (bits per second), and Requests per Second
+for both the get and set commands.
 
 %package -n cacti-template-mysql
 Summary:	Cacti templates for graphing MySQL
@@ -92,6 +109,13 @@ cp -p %{SOURCE2} $RPM_BUILD_ROOT%{_sysconfdir}/ss_get_by_ssh.php
 cp -p templates/cacti_host_template_percona_redis_server_ht.xml \
 	$RPM_BUILD_ROOT%{resourcedir}
 
+# memcached template
+cp -p templates/cacti_host_template_percona_memcached_server_ht.xml \
+	$RPM_BUILD_ROOT%{resourcedir}
+
+%post -n cacti-template-memcached
+%cacti_import_template %{resourcedir}/cacti_host_template_percona_memcached_server_ht.xml
+
 %post -n cacti-template-mysql
 %cacti_import_template %{resourcedir}/cacti_host_template_percona_mysql_server_ht.xml
 
@@ -111,6 +135,10 @@ rm -rf $RPM_BUILD_ROOT
 %doc Changelog
 %attr(640,root,http) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/ss_get_by_ssh.php
 %attr(755,root,root) %{scriptsdir}/ss_get_by_ssh.php
+
+%files -n cacti-template-memcached
+%defattr(644,root,root,755)
+%{resourcedir}/cacti_host_template_percona_memcached_server_ht.xml
 
 %files -n cacti-template-mysql
 %defattr(644,root,root,755)
