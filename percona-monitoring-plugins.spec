@@ -11,7 +11,7 @@
 Summary:	MySQL cacti templates
 Name:		percona-monitoring-plugins
 Version:	1.1.3
-Release:	0.9
+Release:	0.11
 License:	GPL v2
 Group:		Applications/WWW
 Source0:	http://www.percona.com/redir/downloads/percona-monitoring-plugins/LATEST/%{name}-%{version}.tar.gz
@@ -100,6 +100,14 @@ for xml in templates/cacti_host_template_*.xml; do
 done
 
 %{__sed} -i -e '1i#!/usr/bin/php' scripts/*.php
+
+%build
+# regenerate to make port per source
+# http://www.percona.com/doc/percona-monitoring-plugins/1.1/cacti/customizing-templates.html
+cd cacti
+bin/pmp-cacti-template \
+  --script scripts/ss_get_mysql_stats.php definitions/mysql.def \
+  --mpds port > ./templates/cacti_host_template_percona_mysql_server_ht.xml
 
 %install
 rm -rf $RPM_BUILD_ROOT
