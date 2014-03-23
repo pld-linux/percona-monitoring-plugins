@@ -11,7 +11,7 @@
 Summary:	MySQL cacti templates
 Name:		percona-monitoring-plugins
 Version:	1.1.3
-Release:	0.5
+Release:	0.9
 License:	GPL v2
 Group:		Applications/WWW
 Source0:	http://www.percona.com/redir/downloads/percona-monitoring-plugins/LATEST/%{name}-%{version}.tar.gz
@@ -103,9 +103,14 @@ done
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT{%{_sysconfdir},%{resourcedir},%{scriptsdir},%{cachedir}}
+install -d $RPM_BUILD_ROOT{%{_bindir},%{_sysconfdir},%{resourcedir},%{scriptsdir},%{cachedir}}
 
 cd cacti
+# tools for modifying templates
+# http://www.percona.com/doc/percona-monitoring-plugins/1.1/cacti/customizing-templates.html
+cp -p bin/pmp-* $RPM_BUILD_ROOT%{_bindir}
+cp -a definitions $RPM_BUILD_ROOT%{resourcedir}
+
 # this is what is needed for mysql templates
 install -p scripts/ss_get_mysql_stats.php $RPM_BUILD_ROOT%{scriptsdir}
 cp -p %{SOURCE1} $RPM_BUILD_ROOT%{_sysconfdir}/ss_get_mysql_stats.php
@@ -153,8 +158,24 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(644,root,root,755)
 %doc Changelog
+%attr(755,root,root) %{_bindir}/pmp-cacti-extract-template
+%attr(755,root,root) %{_bindir}/pmp-cacti-graph-defs
+%attr(755,root,root) %{_bindir}/pmp-cacti-make-hashes
+%attr(755,root,root) %{_bindir}/pmp-cacti-template
 %attr(640,root,http) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/ss_get_by_ssh.php
 %attr(755,root,root) %{scriptsdir}/ss_get_by_ssh.php
+%dir %{resourcedir}/definitions
+%{resourcedir}/definitions/apache.def
+%{resourcedir}/definitions/galera.def
+%{resourcedir}/definitions/gnu_linux.def
+%{resourcedir}/definitions/jmx.def
+%{resourcedir}/definitions/memcached.def
+%{resourcedir}/definitions/mongodb.def
+%{resourcedir}/definitions/mysql.def
+%{resourcedir}/definitions/nginx.def
+%{resourcedir}/definitions/openvz.def
+%{resourcedir}/definitions/rds.def
+%{resourcedir}/definitions/redis.def
 
 %files -n cacti-template-apache
 %defattr(644,root,root,755)
