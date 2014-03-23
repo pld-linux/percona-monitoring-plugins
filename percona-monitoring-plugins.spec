@@ -11,7 +11,7 @@
 Summary:	MySQL cacti templates
 Name:		percona-monitoring-plugins
 Version:	1.1.3
-Release:	0.4
+Release:	0.5
 License:	GPL v2
 Group:		Applications/WWW
 Source0:	http://www.percona.com/redir/downloads/percona-monitoring-plugins/LATEST/%{name}-%{version}.tar.gz
