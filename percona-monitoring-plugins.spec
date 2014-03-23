@@ -22,6 +22,7 @@ Patch0:		config.patch
 Patch1:		paths.patch
 URL:		http://www.percona.com/software/percona-monitoring-plugins
 BuildRequires:	rpmbuild(macros) >= 1.630
+BuildRequires:	sed >= 4.0
 Requires:	cacti >= 0.8.7g-6
 Conflicts:	cacti-spine < 0.8.7e-3
 BuildArch:	noarch
@@ -97,6 +98,8 @@ for xml in templates/cacti_host_template_*.xml; do
 	normalized=${xml%_0.8.*-sver%{version}.xml}.xml
 	mv $xml $normalized
 done
+
+%{__sed} -i -e '1i#!/usr/bin/php' scripts/*.php
 
 %install
 rm -rf $RPM_BUILD_ROOT
