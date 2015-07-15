@@ -10,12 +10,12 @@
 %define		template	mysql
 Summary:	MySQL cacti templates
 Name:		percona-monitoring-plugins
-Version:	1.1.3
+Version:	1.1.5
 Release:	0.11
 License:	GPL v2
 Group:		Applications/WWW
 Source0:	http://www.percona.com/redir/downloads/percona-monitoring-plugins/LATEST/%{name}-%{version}.tar.gz
-# Source0-md5:	ef344e93adaeb1dd23be722daced9261
+# Source0-md5:	b14299d9f9ee7e544865dbebc9361b88
 Source1:	config.php
 Source2:	ssh_config.php
 Patch0:		config.patch
