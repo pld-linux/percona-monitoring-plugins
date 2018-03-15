@@ -11,7 +11,7 @@
 Summary:	MySQL cacti templates
 Name:		percona-monitoring-plugins
 Version:	1.1.8
-Release:	0.1
+Release:	0.6
 License:	GPL v2
 Group:		Applications/WWW
 Source0:	https://www.percona.com/downloads/%{name}/%{name}-%{version}/source/tarball/%{name}-%{version}.tar.gz
@@ -35,6 +35,7 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 %define		resourcedir		%{cactidir}/resource
 %define		scriptsdir		%{cactidir}/scripts
 %define		cachedir		/var/cache/cacti/mysql_stats
+%define		nagiosplugindir	%{_prefix}/lib/nagios/plugins
 
 %description
 This is a set of templates for monitoring MySQL servers with Cacti.
@@ -89,6 +90,13 @@ Requires:	nc
 %description -n cacti-template-redis
 This is a set of templates for monitoring Redis servers with Cacti.
 
+%package -n percona-nagios-plugins
+Summary:        Percona Monitoring Plugins for Nagios
+Group:          Applications/Databases
+
+%description -n percona-nagios-plugins
+Percona Monitoring Plugins for Nagios.
+
 %prep
 %setup -q
 %patch0 -p1
@@ -99,6 +107,13 @@ This is a set of templates for monitoring Redis servers with Cacti.
 %{__sed} -i -e '1i#!/usr/bin/php' cacti/scripts/*.php
 chmod a+rx cacti/scripts/*.php
 install -d cacti/templates
+
+%{__sed} -i -re '1s;#!/usr/bin/env python(2\.7)?;#!%{__python};' nagios/bin/pmp-*.py
+# omit .py extension
+for f in nagios/bin/pmp-*.py; do
+	normalized=${f%.py}
+	mv $f $normalized
+done
 
 %build
 ./make.sh nodocs
@@ -124,6 +139,11 @@ install -d $RPM_BUILD_ROOT{%{_bindir},%{_sysconfdir},%{resourcedir},%{scriptsdir
 
 cd release/%{name}-%{version}
 
+# NAGIOS
+install -d $RPM_BUILD_ROOT%{nagiosplugindir}
+install -p nagios/bin/pmp-* $RPM_BUILD_ROOT%{nagiosplugindir}
+
+# CACTI
 cd cacti
 # tools for modifying templates
 # https://www.percona.com/doc/percona-monitoring-plugins/1.1/cacti/customizing-templates.html
@@ -214,3 +234,20 @@ rm -rf $RPM_BUILD_ROOT
 %files -n cacti-template-redis
 %defattr(644,root,root,755)
 %{resourcedir}/cacti_host_template_percona_redis_server_ht.xml
+
+%files -n percona-nagios-plugins
+%attr(755,root,root) %{nagiosplugindir}/pmp-check-aws-rds
+%attr(755,root,root) %{nagiosplugindir}/pmp-check-lvm-snapshots
+%attr(755,root,root) %{nagiosplugindir}/pmp-check-mongo
+%attr(755,root,root) %{nagiosplugindir}/pmp-check-mysql-deadlocks
+%attr(755,root,root) %{nagiosplugindir}/pmp-check-mysql-deleted-files
+%attr(755,root,root) %{nagiosplugindir}/pmp-check-mysql-file-privs
+%attr(755,root,root) %{nagiosplugindir}/pmp-check-mysql-innodb
+%attr(755,root,root) %{nagiosplugindir}/pmp-check-mysql-pidfile
+%attr(755,root,root) %{nagiosplugindir}/pmp-check-mysql-processlist
+%attr(755,root,root) %{nagiosplugindir}/pmp-check-mysql-replication-delay
+%attr(755,root,root) %{nagiosplugindir}/pmp-check-mysql-replication-running
+%attr(755,root,root) %{nagiosplugindir}/pmp-check-mysql-status
+%attr(755,root,root) %{nagiosplugindir}/pmp-check-mysql-ts-count
+%attr(755,root,root) %{nagiosplugindir}/pmp-check-pt-table-checksum
+%attr(755,root,root) %{nagiosplugindir}/pmp-check-unix-memory
