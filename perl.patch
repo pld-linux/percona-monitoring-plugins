@@ -1,0 +1,14 @@
+$ bin/pmp-cacti-template --script scripts/ss_get_mysql_stats.php definitions/mysql.def --mpds port
+Redundant argument in sprintf at bin/pmp-cacti-template line 25.
+
+--- percona-monitoring-plugins-1.1.8/cacti/bin/pmp-cacti-template~	2018-03-15 12:49:29.000000000 +0200
++++ percona-monitoring-plugins-1.1.8/cacti/bin/pmp-cacti-template	2018-03-15 12:49:32.988292145 +0200
+@@ -22,7 +22,7 @@
+ 
+ our $VERSION = '@VERSION@';
+ our $DISTRIB = '@DISTRIB@';
+-our $SVN_REV = sprintf("%d", map { $_ || 0 } q$Revision: 555 $ =~ m/(\d*)/g);
++our $SVN_REV = sprintf("%d", map { $_ || 0 } q$Revision: 555 $ =~ m/(\d+)/g);
+ 
+ # ###########################################################################
+ # OptionParser package 1844
