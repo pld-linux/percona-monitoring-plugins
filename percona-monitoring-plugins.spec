@@ -21,6 +21,7 @@ Source2:	ssh_config.php
 Patch0:		config.patch
 Patch1:		paths.patch
 Patch2:		perl.patch
+Patch3:		make.patch
 URL:		https://www.percona.com/software/database-tools/percona-monitoring-plugins
 BuildRequires:	rpmbuild(macros) >= 1.630
 BuildRequires:	sed >= 4.0
@@ -93,6 +94,7 @@ This is a set of templates for monitoring Redis servers with Cacti.
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
 
 %{__sed} -i -e '1i#!/usr/bin/php' cacti/scripts/*.php
 chmod a+rx cacti/scripts/*.php

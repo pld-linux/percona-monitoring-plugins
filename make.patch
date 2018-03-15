@@ -1,0 +1,14 @@
+--- percona-monitoring-plugins-1.1.8/make.sh~	2018-03-15 13:01:12.000000000 +0200
++++ percona-monitoring-plugins-1.1.8/make.sh	2018-03-15 13:01:18.688682550 +0200
+@@ -40,9 +40,9 @@
+ cp cacti/scripts/ss_get_mysql_stats.php release/code/zabbix/scripts
+ cp COPYING Changelog release/code
+ cp Changelog release/docs/changelog.rst
+-mkdir release/{docs/html,code/cacti/templates,code/zabbix/templates}
++mkdir -p release/{docs/html,code/cacti/templates,code/zabbix/templates}
+ 
+-# Cleanup of tmp files 
++# Cleanup of tmp files
+ find release/ -name "*.~*~" -exec rm -f {} \;
+ find release/ -name "*.pyc" -exec rm -f {} \;
+ 
