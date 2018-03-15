@@ -101,6 +101,16 @@ chmod a+rx cacti/scripts/*.php
 install -d cacti/templates
 
 %build
+./make.sh nodocs
+
+cd release/%{name}-%{version}
+
+# rename to include fixed names
+for xml in cacti/templates/cacti_host_template_*.xml; do
+	normalized=${xml%_0.8.*-sver%{version}.xml}.xml
+	mv $xml $normalized
+done
+
 # regenerate to make port per source
 # https://www.percona.com/doc/percona-monitoring-plugins/1.1/cacti/customizing-templates.html
 cd cacti
@@ -111,6 +121,8 @@ bin/pmp-cacti-template \
 %install
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT{%{_bindir},%{_sysconfdir},%{resourcedir},%{scriptsdir},%{cachedir}}
+
+cd release/%{name}-%{version}
 
 cd cacti
 # tools for modifying templates
