@@ -10,17 +10,17 @@
 %define		template	mysql
 Summary:	MySQL cacti templates
 Name:		percona-monitoring-plugins
-Version:	1.1.5
-Release:	0.11
+Version:	1.1.8
+Release:	0.1
 License:	GPL v2
 Group:		Applications/WWW
-Source0:	http://www.percona.com/redir/downloads/percona-monitoring-plugins/LATEST/%{name}-%{version}.tar.gz
-# Source0-md5:	b14299d9f9ee7e544865dbebc9361b88
+Source0:	https://www.percona.com/downloads/%{name}/%{name}-%{version}/source/tarball/%{name}-%{version}.tar.gz
+# Source0-md5:	3521b07a7f8d9d2438c52dc21a449dfa
 Source1:	config.php
 Source2:	ssh_config.php
 Patch0:		config.patch
 Patch1:		paths.patch
-URL:		http://www.percona.com/software/percona-monitoring-plugins
+URL:		https://www.percona.com/software/database-tools/percona-monitoring-plugins
 BuildRequires:	rpmbuild(macros) >= 1.630
 BuildRequires:	sed >= 4.0
 Requires:	cacti >= 0.8.7g-6
@@ -92,22 +92,17 @@ This is a set of templates for monitoring Redis servers with Cacti.
 %patch0 -p1
 %patch1 -p1
 
-cd cacti
-# rename to include fixed names
-for xml in templates/cacti_host_template_*.xml; do
-	normalized=${xml%_0.8.*-sver%{version}.xml}.xml
-	mv $xml $normalized
-done
-
-%{__sed} -i -e '1i#!/usr/bin/php' scripts/*.php
+%{__sed} -i -e '1i#!/usr/bin/php' cacti/scripts/*.php
+chmod a+rx cacti/scripts/*.php
+install -d cacti/templates
 
 %build
 # regenerate to make port per source
-# http://www.percona.com/doc/percona-monitoring-plugins/1.1/cacti/customizing-templates.html
+# https://www.percona.com/doc/percona-monitoring-plugins/1.1/cacti/customizing-templates.html
 cd cacti
 bin/pmp-cacti-template \
   --script scripts/ss_get_mysql_stats.php definitions/mysql.def \
-  --mpds port > ./templates/cacti_host_template_percona_mysql_server_ht.xml
+  --mpds port > templates/cacti_host_template_percona_mysql_server_ht.xml
 
 %install
 rm -rf $RPM_BUILD_ROOT
@@ -115,7 +110,7 @@ install -d $RPM_BUILD_ROOT{%{_bindir},%{_sysconfdir},%{resourcedir},%{scriptsdir
 
 cd cacti
 # tools for modifying templates
-# http://www.percona.com/doc/percona-monitoring-plugins/1.1/cacti/customizing-templates.html
+# https://www.percona.com/doc/percona-monitoring-plugins/1.1/cacti/customizing-templates.html
 cp -p bin/pmp-* $RPM_BUILD_ROOT%{_bindir}
 cp -a definitions $RPM_BUILD_ROOT%{resourcedir}
 
