@@ -11,7 +11,7 @@
 Summary:	MySQL cacti templates
 Name:		percona-monitoring-plugins
 Version:	1.1.8
-Release:	0.6
+Release:	1
 License:	GPL v2
 Group:		Applications/WWW
 Source0:	https://www.percona.com/downloads/%{name}/%{name}-%{version}/source/tarball/%{name}-%{version}.tar.gz
@@ -91,11 +91,20 @@ Requires:	nc
 This is a set of templates for monitoring Redis servers with Cacti.
 
 %package -n percona-nagios-plugins
-Summary:        Percona Monitoring Plugins for Nagios
-Group:          Applications/Databases
+Summary:	Percona Monitoring Plugins for Nagios
+Group:		Applications/Databases
+Requires:	monitoring-plugin-pmp_check_mongo
 
 %description -n percona-nagios-plugins
 Percona Monitoring Plugins for Nagios.
+
+%package -n monitoring-plugin-pmp_check_mongo
+Summary:	MongoDB Nagios check script
+Group:		Networking
+Requires:	python-pymongo
+
+%description -n monitoring-plugin-pmp_check_mongo
+MongoDB Nagios check script.
 
 %prep
 %setup -q
@@ -236,9 +245,9 @@ rm -rf $RPM_BUILD_ROOT
 %{resourcedir}/cacti_host_template_percona_redis_server_ht.xml
 
 %files -n percona-nagios-plugins
+%defattr(644,root,root,755)
 %attr(755,root,root) %{nagiosplugindir}/pmp-check-aws-rds
 %attr(755,root,root) %{nagiosplugindir}/pmp-check-lvm-snapshots
-%attr(755,root,root) %{nagiosplugindir}/pmp-check-mongo
 %attr(755,root,root) %{nagiosplugindir}/pmp-check-mysql-deadlocks
 %attr(755,root,root) %{nagiosplugindir}/pmp-check-mysql-deleted-files
 %attr(755,root,root) %{nagiosplugindir}/pmp-check-mysql-file-privs
@@ -251,3 +260,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{nagiosplugindir}/pmp-check-mysql-ts-count
 %attr(755,root,root) %{nagiosplugindir}/pmp-check-pt-table-checksum
 %attr(755,root,root) %{nagiosplugindir}/pmp-check-unix-memory
+
+%files -n monitoring-plugin-pmp_check_mongo
+%defattr(644,root,root,755)
+%attr(755,root,root) %{nagiosplugindir}/pmp-check-mongo
