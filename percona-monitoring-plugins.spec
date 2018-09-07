@@ -11,7 +11,7 @@
 Summary:	MySQL cacti templates
 Name:		percona-monitoring-plugins
 Version:	1.1.8
-Release:	1
+Release:	2
 License:	GPL v2
 Group:		Applications/WWW
 Source0:	https://www.percona.com/downloads/%{name}/%{name}-%{version}/source/tarball/%{name}-%{version}.tar.gz
@@ -101,7 +101,7 @@ Percona Monitoring Plugins for Nagios.
 %package -n monitoring-plugin-pmp_check_mongo
 Summary:	MongoDB Nagios check script
 Group:		Networking
-Requires:	python-pymongo
+Requires:	python-pymongo >= 3.7.1
 
 %description -n monitoring-plugin-pmp_check_mongo
 MongoDB Nagios check script.
